@@ -144,21 +144,89 @@
                   background-color: #bbbbbb94;
                   border-radius: 50px;
             }
+
+            /* Style for headings */
+            h4 {
+                  font-size: 16px;
+                  font-weight: bold;
+                  margin: 10px 0;
+                  color: #333;
+            }
+
+            /* Style for paragraphs */
+            p {
+                  font-size: 14px;
+                  line-height: 1.6;
+                  margin: 5px 0;
+            }
+
+            /* Optional: Collapsible sections */
+            .collapsible {
+                  background-color: #f4f4f4;
+                  color: #555;
+                  cursor: pointer;
+                  padding: 18px;
+                  width: 100%;
+                  border: none;
+                  text-align: left;
+                  outline: none;
+                  font-size: 15px;
+            }
+
+            .active,
+            .collapsible:hover {
+                  background-color: #ddd;
+            }
+
+            .content {
+                  padding: 0 18px;
+                  display: none;
+                  overflow: hidden;
+                  background-color: #f1f1f1;
+            }
+
+            .navbar {
+                  margin-bottom: 20px;
+                  opacity: 50%;
+            }
       </style>
 
 
 </head>
 
 <body>
+      
+
+
+      <!-- Navigation Bar -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                  <a class="navbar-brand" href="#">KrishnaAI</a>
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                              <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                              </li>
+                              <li class="nav-item">
+                                    <a class="nav-link" href="#">About</a>
+                              </li>
+                              <li class="nav-item">
+                                    <a class="nav-link" href="#">Contact</a>
+                              </li>
+                              <li class="nav-item">
+                                    <a class="nav-link" href="#">FAQ</a>
+                              </li>
+                        </ul>
+                  </div>
+            </div>
+      </nav>
+
       <div id="app"></div>
-
-
-      <!-- <div class="d-flex justify-content-center flex-column flex-md-row gap-3">
-                        <div class="text-center text-center"><label class="text-secondary mb-2">Change Language</label>
-                              <div class="gtranslate_wrapper"></div>
-                        </div>
-                  </div> -->
-
+      
 
       <div id="chat-container">
 
@@ -172,23 +240,6 @@
       </div>
 
 
-
-      <!-- 
-                  <footer class="row g-3 py-4">
-                        <p class="col-md-4 mb-0 text-body-secondary text-center text-md-start"><span>© 2025 Copyright by
-                                    My Gita GPT<br>Design Developed by <b>9x Technology</b></span></p><a href=""
-                              class="col-md-4 text-center link-body-emphasis text-decoration-none"><img
-                                    src="krishna.png" height="50"></a>
-                        <ul class="nav col-md-4 justify-content-center justify-content-md-end">
-                              <li class="nav-item"><a href="./" class="nav-link px-2 text-body-secondary">Home</a></li>
-                              <li class="nav-item"><a href="./about" class="nav-link px-2 text-body-secondary">About</a>
-                              </li>
-                              <li class="nav-item"><a href="./privacy-policy"
-                                          class="nav-link px-2 text-body-secondary">Privacy Policy</a></li>
-                              <li class="nav-item"><a href="./terms-and-conditions"
-                                          class="nav-link px-2 text-body-secondary">Terms And Conditions</a></li>
-                        </ul>
-                  </footer> -->
 
 
 </body>
@@ -210,64 +261,6 @@
       const messages = [
             { role: "system", content: "You are an AI assistant knowledgeable in the Bhagavad Gita. Provide insightful responses using relevant verses and explanations. Make it more detailed. and length should be more than 500 words " }
       ];
-
-      async function appendToGitHubFile() {
-            const token = "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";
-            const username = "harshiit13"; // 🔴 Replace with your GitHub username
-            const repo = "Market-Segmentation";
-            const filePath = "data.txt"; // 🔴 The file you want to append data to
-            const apiUrl = `https://api.github.com/repos/${username}/${repo}/contents/${filePath}`;
-
-            let existingContent = "";
-            let sha = null; // To track the existing file version
-
-            // Step 1: Fetch the existing file content
-            try {
-                  const response = await fetch(apiUrl, {
-                        headers: { Authorization: `token ${token}` }
-                  });
-
-                  if (response.ok) {
-                        const data = await response.json();
-                        existingContent = atob(data.content); // Decode Base64 content
-                        sha = data.sha; // Get the file's SHA (needed for updating)
-                  }
-            } catch (error) {
-                  console.error("Error fetching existing file:", error);
-                  alert("Failed to fetch file. Make sure the file exists.");
-                  return;
-            }
-
-            // Step 2: Append new data to the existing content
-            const newData = '\n\n ---------------------- \nUser : ' + userData + '\nAI : ' + botData
-            const updatedContent = existingContent + "\n" + newData; // Append new text
-
-            // Step 3: Upload the updated content back to GitHub
-            const requestBody = {
-                  message: "Appending data to file",
-                  content: btoa(unescape(encodeURIComponent(updatedContent))),
-                  sha: sha // GitHub requires SHA to update existing files
-            };
-
-            fetch(apiUrl, {
-                  method: "PUT",
-                  headers: {
-                        Authorization: `token ${token}`,
-                        "Content-Type": "application/json"
-                  },
-                  body: JSON.stringify(requestBody)
-            })
-                  .then(response => response.json())
-                  .then(data => {
-                        if (data.commit) {
-                              console.log("Data appended to GitHub file successfully!");
-                        } else {
-                              alert("Failed to append data. Check console for details.");
-                              console.error(data);
-                        }
-                  })
-                  .catch(error => console.error("Error:", error));
-      };
 
       async function sendMessage() {
             const userMessage = document.getElementById("userInput").value.trim();
@@ -302,26 +295,30 @@
             messages.push({ role: "assistant", content: botMessage });
 
             function formatGitaResponse(response) {
-                  const parts = response.split("Meaning:");
-                  if (parts.length < 2) return response; // Return original if splitting fails
+                  // Split the response into sections based on keywords like "Meaning," "Explanation," and "Guidance"
+                  const parts = response.split(/(Meaning:|Explanation:|Guidance:)/);
 
-                  const gitaVerse = parts[0].trim();
-                  const meaningAndGuidance = parts[1].split("Insights:");
+                  // Initialize an array to hold formatted sections
+                  let formattedSections = [];
 
-                  if (meaningAndGuidance.length < 2) return response; // Return original if missing insights
+                  // Iterate through the parts and format them
+                  for (let i = 0; i < parts.length; i++) {
+                        const part = parts[i].trim();
 
-                  const meaning = meaningAndGuidance[0].trim();
-                  const guidance = meaningAndGuidance[1].trim();
+                        // Check if the part is a header (e.g., "Meaning:", "Explanation:", "Guidance:")
+                        if (part === "Meaning:" || part === "Explanation:" || part === "Guidance:") {
+                              // Add a heading for the section
+                              formattedSections.push(`<h4>${part.replace(":", "")}</h4>`);
+                        } else if (part) {
+                              // Add the content of the section
+                              formattedSections.push(`<p>${part}</p>`);
+                        }
+                  }
 
+                  // Combine all formatted sections
                   return `
-    📖 *Bhagavad Gita Verse*  
-    ${gitaVerse}
-
-    🔍 *Meaning*  
-    ${meaning}
-
-    💡 *Guidance*  
-    ${guidance}
+        📖 
+        ${formattedSections.join("")}
     `;
             }
 
@@ -343,6 +340,9 @@
             chatbox.appendChild(messageDiv);
             chatbox.scrollTop = chatbox.scrollHeight;
       }
+
+
+
 </script>
 
 <script src="npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
