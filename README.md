@@ -11,7 +11,7 @@ Run the Container
 ##Access the Application
 
 Open your browser and navigate to:
-```http://localhost:8080```
+```http://localhost:8000```
 
 You should see your index.html file being served.
 
