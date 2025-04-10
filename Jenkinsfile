@@ -47,9 +47,6 @@ pipeline {
 
 
 
-
-
-
 /*
 pipeline {
     agent { label "chintu" }
