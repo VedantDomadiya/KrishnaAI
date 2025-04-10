@@ -2,9 +2,7 @@ version: '3.8'
 
 services:
   krishna-ai:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: "vedantdomadiya/krishna-ai:latest"
     container_name: krishna-ai-container
     ports:
       - "8000:8000" # Map host port 8000 to container port 8000
